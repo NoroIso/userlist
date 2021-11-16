@@ -29,9 +29,9 @@ class ProfilePost extends Controller
 
         $validatedData = $request->validated();
 
-        //$imageName = time().'.'.$request->image->extension();  
+        $imageName = time().'.'.$request->image->extension();  
      
-        //$request->image->move(public_path('images'), $imageName);
+        $request->image->move(public_path('images'), $imageName);
 
         $post = Post::create($validatedData);
 
@@ -62,9 +62,9 @@ class ProfilePost extends Controller
 
         $validatedData = $request->validated();
 
-        //$imageName = time().'.'.$request->image->extension();  
+        $imageName = time().'.'.$request->image->extension();  
      
-        //$request->image->move(public_path('images'), $imageName);
+        $request->image->move(public_path('images'), $imageName);
 
         $post->update($validatedData);
         $post->users()->attach($request->users);
