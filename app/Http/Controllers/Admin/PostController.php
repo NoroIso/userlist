@@ -41,6 +41,12 @@ class PostController extends Controller
 
         $validatedData = $request->validated();
 
+        //$post = Post::create($validatedData);
+
+        //$imageName = time().'.'.$request->image->extension();  
+     
+        //$resquest->image->move(public_path('images'), $imageName);
+
         $post = Post::create($validatedData);
 
         $post->users()->attach($request->users);
@@ -93,6 +99,10 @@ class PostController extends Controller
         }
 
         $validatedData = $request->validated();
+
+        //$imageName = time().'.'.$request->image->extension();  
+     
+        //$request->image->move(public_path('images'), $imageName);
 
         $post->update($validatedData);
         $post->users()->attach($request->users);

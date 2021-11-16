@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Admin\UserController;
 use Admin\PostController;
 use User\Profile;
-use User\Profile_Post;
+use User\ProfilePost;
 //use PostController;
 
 /*
@@ -24,7 +24,7 @@ Route::get('/', function () {
 
 Route::prefix('user')->middleware(['auth', 'verified'])->name('user.')->group(function(){
   Route::resource('/users', Profile::class);
-  Route::resource('/posts', Profile_Post::class);
+  Route::resource('/posts', ProfilePost::class);
 
 });
 

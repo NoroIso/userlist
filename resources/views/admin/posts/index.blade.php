@@ -16,6 +16,7 @@
   			<th scope='col'>#Id</th>
   			<th scope='col'>Title</th>
   			<th scope='col'>Description</th>
+         <th width="30%">Image</th>
   			<th scope='col'>Actions</th>
   		</tr>
   		</thead>
@@ -25,7 +26,7 @@
   			<th scope='col'>{{ $post->id }}</th>
   			<td>{{ $post->title }}</td>
   			<td>{{ $post->description }}</td>
-  			<!-- <td>{{ $post->file_path }}</td> -->
+  			<td><img src="{{ asset('/images/'.$post->image) }}" / width="120px"></td>
   			<td>
   			  <a class="btn btn-sm btn-primary" href="{{ route('admin.posts.edit', $post->id) }}" role="button">Edit</a>
   			  <button type="button" class="btn btn-sm btn-danger" onclick="event.preventDefault();document.getElementById('delete-post-form-{{ $post->id }}').submit()"> 

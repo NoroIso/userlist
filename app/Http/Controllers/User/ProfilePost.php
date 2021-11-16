@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Models\User;
 
-class Profile_Post extends Controller
+class ProfilePost extends Controller
 {
     public function index(){
     	return view('user.posts.index',['posts' => Post::paginate(10)]);
@@ -28,6 +28,10 @@ class Profile_Post extends Controller
     {
 
         $validatedData = $request->validated();
+
+        //$imageName = time().'.'.$request->image->extension();  
+     
+        //$request->image->move(public_path('images'), $imageName);
 
         $post = Post::create($validatedData);
 
@@ -57,6 +61,10 @@ class Profile_Post extends Controller
         }
 
         $validatedData = $request->validated();
+
+        //$imageName = time().'.'.$request->image->extension();  
+     
+        //$request->image->move(public_path('images'), $imageName);
 
         $post->update($validatedData);
         $post->users()->attach($request->users);
