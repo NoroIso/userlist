@@ -53,6 +53,9 @@ class ProfilePost extends Controller
 
     public function update(StorePostRequest $request, $id)
     {
+
+         //$this->authorize('update', $post);
+
         $post = Post::find($id);
 
         if(!$post->id=$id){
@@ -67,7 +70,6 @@ class ProfilePost extends Controller
         $request->image->move(public_path('images'), $imageName);
 
         $post->update($validatedData);
-        //$post->where('id',$user_id)->update($validatedData);
         $post->users()->attach($request->users);
 
         $request->session()->flash('success', 'You have edited the post');
@@ -77,8 +79,11 @@ class ProfilePost extends Controller
 
     public function destroy($id, Request $request)
     {
+
+
+        // $this->authorize('delete', $post);
+
         Post::destroy($id);
-        //Post::where('id',$user_id)->destroy($id);
         $request->session()->flash('success', 'You have deleted the post');
 
         return redirect(route('user.posts.index'));

@@ -23,4 +23,13 @@ class Post extends Model
     public function users(){
     	return $this->belongsToMany('App\Models\User');
     }
+
+
+
+    //public function user()
+    //{
+       // return $this->belongsTo(User::class);
+    //}
+
+
 }

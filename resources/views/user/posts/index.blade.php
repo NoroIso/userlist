@@ -29,10 +29,14 @@
   			<td><img src="{{ asset('/images/'.$post->image) }}" alt="" width="100"></td>
   			<td>
            <a class="btn btn-sm btn-warning" href="{{ route('user.posts.show', $post->id) }}" role="button">Show</a>
+           <!-- @can('update', $post) -->
   			  <a class="btn btn-sm btn-primary" href="{{ route('user.posts.edit', $post->id) }}" role="button">Edit</a>
+          <!-- @endcan -->
+          <!-- @can('delete', $post) -->
   			  <button type="button" class="btn btn-sm btn-danger" onclick="event.preventDefault();document.getElementById('delete-post-form-{{ $post->id }}').submit()"> 
   			   Delete 
   			 </button>
+         <!-- @endcan -->
   			 <form id="delete-post-form-{{$post->id}}" action="{{ route('user.posts.destroy', $post->id)}}" method='post' style="display: none">
   			 	@csrf
   			 	@method("DELETE")
