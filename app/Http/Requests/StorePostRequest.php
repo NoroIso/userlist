@@ -27,7 +27,7 @@ class StorePostRequest extends FormRequest
             'title' => 'required|max:255',
             'description' => 'required|min:8|max:255',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
-            //'user_id' => 1
+            //'user_id' => ['required', 1]
         ];
     }
 }

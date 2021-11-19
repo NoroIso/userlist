@@ -43,13 +43,24 @@ class PostController extends Controller
 
         //$post = Post::create($validatedData);
 
-        $imageName = time().'.'.$request->image->extension();  
-     
-        $resquest->image->move(public_path('images'), $imageName);
+        if($request->hasFile('image')){
+            // Get filename with the extension
+            $filenameWithExt = $request->file('image')->getClientOriginalName();
+            // Get just filename
+            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+            // Get just ext
+            $extension = $request->file('image')->getClientOriginalExtension();
+            // Filename to store
+            $fileNameToStore= $filename.'_'.time().'.'.$extension;
+            // Upload Image
+            $path = $request->file('image')->storeAs('public/images', $fileNameToStore);
+        } else {
+            $fileNameToStore = 'noimage.jpg';
+        }
 
         $post = Post::create($validatedData);
 
-        $post->users()->attach($request->users);
+        $post->users()->sync($request->users);
 
         $request->session()->flash('success', 'You have created the post');
 
@@ -100,12 +111,23 @@ class PostController extends Controller
 
         $validatedData = $request->validated();
 
-        $imageName = time().'.'.$request->image->extension();  
-     
-        $request->image->move(public_path('images'), $imageName);
+        if($request->hasFile('image')){
+            // Get filename with the extension
+            $filenameWithExt = $request->file('image')->getClientOriginalName();
+            // Get just filename
+            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+            // Get just ext
+            $extension = $request->file('image')->getClientOriginalExtension();
+            // Filename to store
+            $fileNameToStore= $filename.'_'.time().'.'.$extension;
+            // Upload Image
+            $path = $request->file('image')->storeAs('public/images', $fileNameToStore);
+        } else {
+            $fileNameToStore = 'noimage.jpg';
+        }
 
         $post->update($validatedData);
-        $post->users()->attach($request->users);
+        $post->users()->sync($request->users);
 
         $request->session()->flash('success', 'You have edited the post');
 

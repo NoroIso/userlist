@@ -17,7 +17,7 @@ class PostFactory extends Factory
         return [
             'title' => $this->faker->sentence($nbWords = 6, $variableNbWords = true),
             'description' => $this->faker->paragraph($nbSentences = 3, $variableNbSentences = true),
-            'image' => $this->faker->imageUrl($width = 640, $height = 480),
+            'image' => $this->faker->imageUrl($width = 640, $height = 480)
             //'user_id' => User::factory()
         ];
     }

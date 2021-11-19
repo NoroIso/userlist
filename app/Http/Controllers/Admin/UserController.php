@@ -111,7 +111,7 @@ class UserController extends Controller
 
         $validatedData = $request->validated();
 
-        $user->update($validatedData);
+        $user->update($validatedData->only(['name','email']));
         $user->roles()->sync($request->roles);
 
         $request->session()->flash('success', 'You have edited the user');
