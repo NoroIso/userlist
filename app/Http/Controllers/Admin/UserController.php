@@ -51,12 +51,12 @@ class UserController extends Controller
     public function store(StoreUserRequest $request)
     {
 
-        $validatedData = $request->validated();
+        //$validatedData = $request->validated();
 
-        $user = User::create($validatedData);
+        //$user = User::create($validatedData);
 
-        //$newUser = new CreateNewUser();
-        //$user = $newUser->create($request->only(['name', 'email', 'password', 'password_confirmation']));
+        $newUser = new CreateNewUser();
+        $user = $newUser->create($request->only(['name', 'email', 'password', 'password_confirmation']));
 
         $user->roles()->sync($request->roles);
 
@@ -109,9 +109,11 @@ class UserController extends Controller
             return redirect(route('admin.users.index'));
         }
 
-        $validatedData = $request->validated();
+        //$validatedData = $request->validated();
 
-        $user->update($validatedData->only(['name','email']));
+        //$user->update($request->only(['name','email'])->validated());
+        $updatedUser = new UpdateUserProfileInformation();
+        $user = $updatedUser->update($request->only(['name','email']));
         $user->roles()->sync($request->roles);
 
         $request->session()->flash('success', 'You have edited the user');
