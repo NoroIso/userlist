@@ -100,7 +100,7 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(StoreUserRequest $request, $id)
+    public function update(Request $request, $id)
     {
         $user = User::find($id);
 
@@ -112,8 +112,15 @@ class UserController extends Controller
         //$validatedData = $request->validated();
 
         //$user->update($request->only(['name','email'])->validated());
-        $updatedUser = new UpdateUserProfileInformation();
-        $user = $updatedUser->update($request->only(['name','email']));
+
+        $validatedData = $request->validate([
+           'name' => 'required|max:255',
+           'email' => 'required|max:255|unique:users',
+           'password' => 'required|min:8|max:255'
+        ]);
+
+
+        $user->update($validatedData);
         $user->roles()->sync($request->roles);
 
         $request->session()->flash('success', 'You have edited the user');

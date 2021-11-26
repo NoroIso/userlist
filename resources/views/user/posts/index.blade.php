@@ -16,7 +16,7 @@
   			<th scope='col'>#Id</th>
   			<th scope='col'>Title</th>
   			<th scope='col'>Description</th>
-  			<th scope='col' width="30%">Image</th> 
+  			<th  width="30%">Image</th> 
   			<th scope='col'>Actions</th>
   		</tr>
   		</thead>
@@ -26,7 +26,7 @@
   			<th scope='col'>{{ $post->id }}</th>
   			<td>{{ $post->title }}</td>
   			<td>{{ $post->description }}</td>
-  			<td><img src="{{ asset('/images/'.$post->image) }}" alt="" width="100"></td>
+  			<td><img src="{{ asset('/storage/images/' . $post->image) }}" / width="120px"></td>
   			<td>
            <a class="btn btn-sm btn-warning" href="{{ route('user.posts.show', $post->id) }}" role="button">Show</a>
   			  <a class="btn btn-sm btn-primary" href="{{ route('user.posts.edit', $post->id) }}" role="button">Edit</a>

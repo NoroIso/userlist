@@ -36,27 +36,33 @@ class PostController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StorePostRequest $request)
+    public function store(Request $request)
     {
 
-        $validatedData = $request->validated();
+        $validatedData = $request->validate([
+            'title' => 'required|max:255',
+            'description' => 'required|min:8|max:255',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+        ]);
 
-        //$post = Post::create($validatedData);
-
-        if($request->hasFile('image')){
             // Get filename with the extension
-            $filenameWithExt = $request->file('image')->getClientOriginalName();
+            $filenameWithExt = $request->file('image')->hashName();
             // Get just filename
             $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
             // Get just ext
-            $extension = $request->file('image')->getClientOriginalExtension();
+            $extension = $request->file('image')->extension();
             // Filename to store
             $fileNameToStore= $filename.'_'.time().'.'.$extension;
-            // Upload Image
-            $path = $request->file('image')->storeAs('public/images', $fileNameToStore);
-        } else {
-            $fileNameToStore = 'noimage.jpg';
-        }
+
+
+            try{
+                // Upload Image
+                $path = $request->file('image')->storePubliclyAs('images', $fileNameToStore, 'public');
+            } catch (Exception $e) {
+                $request->session()->flash('error', $e->getMessage());
+            }
+
+        $validatedData['image'] = $fileNameToStore;
 
         $post = Post::create($validatedData);
 
@@ -100,8 +106,9 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(StorePostRequest $request, $id)
+    public function update( Request $request, $id)
     {
+
         $post = Post::find($id);
 
         if(!$post){
@@ -109,22 +116,31 @@ class PostController extends Controller
             return redirect(route('admin.posts.index'));
         }
 
-        $validatedData = $request->validated();
 
-        if($request->hasFile('image')){
+        $validatedData = $request->validate([
+            'title' => 'required|max:255',
+            'description' => 'required|min:8|max:255',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+        ]);
+
             // Get filename with the extension
-            $filenameWithExt = $request->file('image')->getClientOriginalName();
+            $filenameWithExt = $request->file('image')->hashName();
             // Get just filename
             $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
             // Get just ext
-            $extension = $request->file('image')->getClientOriginalExtension();
+            $extension = $request->file('image')->extension();
             // Filename to store
             $fileNameToStore= $filename.'_'.time().'.'.$extension;
-            // Upload Image
-            $path = $request->file('image')->storeAs('public/images', $fileNameToStore);
-        } else {
-            $fileNameToStore = 'noimage.jpg';
-        }
+
+
+            try{
+                // Upload Image
+                $path = $request->file('image')->storePubliclyAs('images', $fileNameToStore, 'public');
+            } catch (Exception $e) {
+                $request->session()->flash('error', $e->getMessage());
+            }
+
+        $validatedData['image'] = $fileNameToStore;
 
         $post->update($validatedData);
         $post->users()->sync($request->users);
