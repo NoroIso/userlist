@@ -66,6 +66,10 @@ class PostController extends Controller
 
         $post = Post::create($validatedData);
 
+        //Post::create(array_merge($request->only('title', 'description', 'body'),[
+            //'user_id' => auth()->id()
+        //]));
+
         $post->users()->sync($request->users);
 
         $request->session()->flash('success', 'You have created the post');
@@ -143,6 +147,7 @@ class PostController extends Controller
         $validatedData['image'] = $fileNameToStore;
 
         $post->update($validatedData);
+        //$post->update($request->only('title', 'description', 'body'));
         $post->users()->sync($request->users);
 
         $request->session()->flash('success', 'You have edited the post');
