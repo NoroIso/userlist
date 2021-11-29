@@ -55,6 +55,8 @@ class ProfilePost extends Controller
 
         $post = Post::create($validatedData);
 
+        //Post::create(array_merge($validatedData,['user_id' => auth()->id()]));
+
         $post->users()->sync($request->users);
 
         $request->session()->flash('success', 'You have created the post');

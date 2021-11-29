@@ -66,9 +66,7 @@ class PostController extends Controller
 
         $post = Post::create($validatedData);
 
-        //Post::create(array_merge($request->only('title', 'description', 'body'),[
-            //'user_id' => auth()->id()
-        //]));
+        //Post::create(array_merge($validatedData,['user_id' => auth()->id()]));
 
         $post->users()->sync($request->users);
 
