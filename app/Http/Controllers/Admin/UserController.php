@@ -48,7 +48,7 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreUserRequest $request)
+    public function store(Request $request)
     {
 
         //$validatedData = $request->validated();
@@ -120,7 +120,7 @@ class UserController extends Controller
         ]);
 
 
-        $user->update($validatedData);
+        $user->update($validatedData->only(['name', 'email']));
         $user->roles()->sync($request->roles);
 
         $request->session()->flash('success', 'You have edited the user');
